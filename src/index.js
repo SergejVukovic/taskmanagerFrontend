@@ -17,6 +17,7 @@ const store = createStore(reducer,/* preloadedState, */
     window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
 
 //Axios default settings 
+// axios.defaults.baseURL = 'https://tm-api.sergejvukovic.com';
 axios.defaults.baseURL = 'http://localhost:8000';
 axios.defaults.headers.common['Authorization'] = `Bearer ${localStorage.authToken}`;
 axios.defaults.headers.post['Content-Type'] = 'application/json';

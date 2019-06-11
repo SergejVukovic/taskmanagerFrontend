@@ -5,10 +5,10 @@ import axios from 'axios';
 import {connect} from 'react-redux';
 import * as actionTypes from '../../store/actions/actions';
 
-class NewLabel extends Component {
+class NewGroup extends Component {
 
     state = {
-        title: {
+        name: {
             value: '',
             valid: false,
             touched: false,
@@ -26,14 +26,13 @@ class NewLabel extends Component {
         }
     }
 
-    handleNewLabel = () => {
+    handleNewGroup = () => {
 
-        axios.post('/api/label', {
-            label_title: this.state.title.value,
-            label_description: this.state.description.value
-            })
-            .then(response => this.props.onTaskAdded(response.data.message))
-            .catch(error => this.props.onTaskAddedError(error.response.data.message));
+        axios.post('/api/groups', {
+            name: this.state.name.value,
+            description: this.state.description.value
+        }).then(response => this.props.onTaskAdded(response.data.message))
+          .catch(error => this.props.onTaskAddedError(error.response.data.message));
     }
 
     checkValidity = (value, rules) => {
@@ -62,27 +61,27 @@ class NewLabel extends Component {
                     </Grid>
                     <Grid container alignContent='center' spacing={8} alignItems="flex-end">
                         <Grid item md={true} sm={true} xs={true}>
-                            <TextField id="title" label="Title" type="text" fullWidth autoFocus required
-                                onChange={(event) => this.handleInputValidation(event)}
-                                error={!this.state.title.valid && this.state.title.touched} />
+                            <TextField id="name" label="Name" type="text" fullWidth autoFocus required
+                                       onChange={(event) => this.handleInputValidation(event)}
+                                       error={!this.state.name.valid && this.state.name.touched} />
                         </Grid>
                     </Grid>
                     <Grid container spacing={8} alignItems="flex-end">
                         <Grid item md={true} sm={true} xs={true}>
                             <TextField id="description" label="Description" type="text" fullWidth required multiline rows={4}
-                                onChange={(event) => this.handleInputValidation(event)}
-                                error={!this.state.description.valid && this.state.description.touched} />
+                                       onChange={(event) => this.handleInputValidation(event)}
+                                       error={!this.state.description.valid && this.state.description.touched} />
                         </Grid>
                     </Grid>
                     <Grid container justify="center" style={{ marginTop: '10px' }}>
                         <Button
-                            onClick={this.handleNewLabel}
-                            disabled={!this.state.title.valid || !this.state.description.valid}
+                            onClick={this.handleNewGroup}
+                            disabled={!this.state.name.valid || !this.state.description.valid}
                             variant="contained"
                             color="secondary"
                             style={{ textTransform: "none" }}>
-                            Save Label
-                 </Button>
+                            Save Group
+                        </Button>
                     </Grid>
                 </div>
             </Paper>
@@ -106,4 +105,4 @@ const mapDispatchToProps = dispatch => {
     }
 }
 
-export default connect(null,mapDispatchToProps)(NewLabel);
+export default connect(null,mapDispatchToProps)(NewGroup);

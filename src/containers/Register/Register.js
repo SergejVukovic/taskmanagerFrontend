@@ -100,7 +100,7 @@ class Register extends Component {
                     <Grid item md={true} sm={true} xs={true}>
                         <TextField id="name" label="Name" type="text" fullWidth  autoFocus required
                         onChange={(event)=>this.handleInputValidation(event)}
-                        error = {!this.state.name.valid && this.state.name.touched ? true : false } />
+                        error = {!this.state.name.valid && this.state.name.touched } />
                     </Grid>
                 </Grid>
                 <Grid container alignContent='center' spacing={8} alignItems="flex-end">
@@ -110,7 +110,7 @@ class Register extends Component {
                     <Grid item md={true} sm={true} xs={true}>
                         <TextField id="email" label="Email" type="email" fullWidth required 
                         onChange={(event)=>this.handleInputValidation(event)}
-                        error = {!this.state.email.valid && this.state.email.touched ? true : false }/>
+                        error = {!this.state.email.valid && this.state.email.touched }/>
                     </Grid>
                 </Grid>
                 <Grid container spacing={8} alignItems="flex-end">
@@ -120,7 +120,7 @@ class Register extends Component {
                     <Grid item md={true} sm={true} xs={true}>
                         <TextField id="password" label="Password" type="password" fullWidth  required 
                         onChange={(event)=>this.handleInputValidation(event)}
-                        error = {!this.state.password.valid && this.state.password.touched ? true : false }/>
+                        error = {!this.state.password.valid && this.state.password.touched }/>
                     </Grid>
                 </Grid>
                 <Grid container spacing={8} alignItems="flex-end">
@@ -130,7 +130,7 @@ class Register extends Component {
                     <Grid item md={true} sm={true} xs={true}>
                         <TextField id="password_confirmation" label="Password Confirmation" type="password" fullWidth  required 
                         onChange={(event)=>this.handleInputValidation(event)}
-                        error = {!this.state.password_confirmation.valid && this.state.password_confirmation.touched ? true : false }/>
+                        error = {!this.state.password_confirmation.valid && this.state.password_confirmation.touched }/>
                     </Grid>
                 </Grid>
                 <Grid container justify="center" style={{ marginTop: '10px' }}>

@@ -13,6 +13,8 @@ import './App.css';
 import {connect} from 'react-redux';
 import * as actionTypes from './store/actions/actions';
 import CustomSnackbarContent from './components/UI/CustomSnackbarContent/CustomSnackbarContent';
+import Groups from "./containers/Groups/Groups";
+import NewGroup from "./containers/NewGroup/NewGroup";
 
 
 class App extends Component {
@@ -25,6 +27,9 @@ class App extends Component {
         <Switch>
           {this.props.isAuth ? <Route exact path="/new-task"  component={NewTask} /> : null}
           {this.props.isAuth ? <Route exact path="/new-label" component={NewLabel} /> : null}
+          {this.props.isAuth ? <Route exact path="/groups" component={Groups} /> : null}
+          {this.props.isAuth ? <Route exact path="/groups/new-group" component={NewGroup} /> : null}
+          {this.props.isAuth ? <Route exact path="/groups/tasks" component={NewLabel} /> : null}
           {this.props.isAuth ? <Route exact path="/dashboard" component={Dashboard} /> : null}
           <Route exact path="/login" component={Login}/>
           <Route exact path="/register" component={Register}/>

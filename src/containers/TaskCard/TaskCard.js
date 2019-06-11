@@ -4,8 +4,8 @@ import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
-import AddIcon from '@material-ui/icons/Add';
 import DeleteIcon from '@material-ui/icons/Delete';
+import ShareIcon from '@material-ui/icons/Share'
 import DoneIcon from '@material-ui/icons/Done'
 import Chip from '@material-ui/core/Chip';
 import red from '@material-ui/core/colors/red';
@@ -21,6 +21,7 @@ class TaskCard extends Component {
 
     state = {
         dialogOpen : false,
+        groupsDialogOpen : false,
         tasklabels : [],
         newLabelId : null
     }
@@ -35,11 +36,18 @@ class TaskCard extends Component {
         }
     }
 
-    handleDialogOpen = () => {
+    handleLabelDialogOpen = () => {
         this.setState({dialogOpen:true});
     }
-    handleDialogClose = () => {
+    handleLabelDialogClose = () => {
         this.setState({dialogOpen:false});
+    }
+
+    handleGroupsDialogOpen = () => {
+        this.setState({groupsDialogOpen:true});
+    }
+    handleGroupsDialogClose = () => {
+        this.setState({groupsDialogOpen:false});
     }
     
     handleLabelAdd = (label) => {
@@ -54,6 +62,12 @@ class TaskCard extends Component {
         })
         .then(response => this.props.requestSuccess(response.data.message))
         .catch(error => this.props.requestError(error.response.data.message));
+    }
+
+    handleGroupShare = (group) => {
+        axios.put(`api/task/${this.props.taskid}/group/${group.id}`)
+            .then(response => this.props.requestSuccess(response.data.message))
+            .catch(error => this.props.requestError(error.response.data.message));
     }
 
     handleLabelDelete = (taskid,labelid) => {
@@ -91,6 +105,7 @@ class TaskCard extends Component {
         color="secondary" onDelete={() => this.handleLabelDelete(this.props.taskid,label.id)} variant="outlined"
         style = {{margin:5}}
         />))
+        console.log(this.props);
         
         return (
             <Card style={styles.card}>
@@ -103,8 +118,11 @@ class TaskCard extends Component {
             <div>{Labels}</div>
             </CardContent>
             <CardActions style={styles.addLabelButtonHolder}>
-                <Button variant="fab" color="primary" aria-label="Add" mini onClick={this.handleDialogOpen}>
-                    <AddIcon />
+                <Button variant="extendedFab" color="primary" aria-label="Add" medium onClick={this.handleLabelDialogOpen}>
+                   Add label
+                </Button>
+                <Button variant="fab" color="primary" aria-label="Add" mini onClick={this.handleGroupsDialogOpen}>
+                    <ShareIcon />
                 </Button>
                 <Button style={styles.markAsDoneButton} variant="fab" color="primary" aria-label="Add" mini onClick={() => this.props.taskDone(this.props.taskid)}>
                     <DoneIcon />
@@ -113,11 +131,20 @@ class TaskCard extends Component {
                     <DeleteIcon />
                 </Button>
             </CardActions>
-            <LabelDialog 
-            open={this.state.dialogOpen}
-            labels = {this.props.labels}
-            onClose = {this.handleDialogClose}
-            taskid = {this.props.taskid}
+            <LabelDialog
+                label={true}
+                open={this.state.dialogOpen}
+                labels = {this.props.labels}
+                onClose = {this.handleLabelDialogClose}
+                taskid = {this.props.taskid}
+            />
+            <LabelDialog
+                group={true}
+                open={this.state.groupsDialogOpen}
+                groups = {this.props.groups}
+                onClose = {this.handleGroupsDialogClose}
+                sharetogroup = {this.handleGroupShare}
+                taskid = {this.props.taskid}
             />
           </Card>
         )

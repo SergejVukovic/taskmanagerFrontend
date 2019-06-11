@@ -23,26 +23,33 @@ class LabelDialog extends Component {
   };
 
   handleListItemClick = (label,taskid) => {
-    this.props.labeladd(label,taskid);
-    this.props.onClose(label);
+      if (this.props.label){
+          this.props.labeladd(label,taskid);
+          this.props.onClose(label);
+      }else{
+          this.props.sharetogroup(label);
+          this.props.onClose(label);
+      }
   };
 
   render() {
-    const { classes, onClose, selectedValue, ...other } = this.props;
-
+    const { classes, onClose, selectedValue,label,group, ...other } = this.props;
+    const data = label ? this.props.labels : this.props.groups;
+    const title = label ? 'Set label to task' : 'Share task with the group';
+    const buttonText = label ? 'Add label' : 'Add Group';
     return (
       <Dialog onClose={this.handleClose} aria-labelledby="simple-dialog-title" {...other}>
-        <DialogTitle id="simple-dialog-title">Set label for task</DialogTitle>
+        <DialogTitle id="simple-dialog-title">{title}</DialogTitle>
         <div>
           <List>
-            {this.props.labels ? this.props.labels.map((label,index) => (
+            {data ? data.map((label,index) => (
               <ListItem button onClick={() => this.handleListItemClick(label,this.props.taskid)} key={index}>
                 <ListItemAvatar>
                   <Avatar>
                     <LabelIcon />
                   </Avatar>
                 </ListItemAvatar>
-                <ListItemText primary={label.label_title} />
+                <ListItemText primary={label.label_title || label.name} />
               </ListItem>
             )):
             (<ListItem button key={2}>
@@ -59,7 +66,7 @@ class LabelDialog extends Component {
                   <AddIcon />
                 </Avatar>
               </ListItemAvatar>
-              <ListItemText primary="add label" />
+              <ListItemText primary={buttonText} />
             </ListItem>
           </List>
         </div>

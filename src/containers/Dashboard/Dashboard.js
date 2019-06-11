@@ -9,6 +9,7 @@ class Dashboard extends Component {
 
     state = {
         tasks: false,
+        groups: [],
         allUserLabels: null
     }
 
@@ -31,6 +32,11 @@ class Dashboard extends Component {
                 localStorage.removeItem('authToken');
                 this.props.history.push('/login');
             });
+
+        axios.get('/api/groups/user')
+            .then(response => {
+                this.setState({groups: response.data})
+            })
 
     }
 
@@ -77,6 +83,7 @@ class Dashboard extends Component {
                         description={task.task_description}
                         tasklabels={task.labels}
                         labels={this.state.allUserLabels}
+                        groups={this.state.groups}
                     />
                 )
             })

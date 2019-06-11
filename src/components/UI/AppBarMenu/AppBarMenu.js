@@ -38,6 +38,8 @@ const AppBarMenu = (props) => {
         <Button color="inherit" component={Link} to="/dashboard">Dashboard </Button>
         <Button color="inherit" component={Link} to="/new-task">New Task </Button>
         <Button color="inherit" component={Link} to="/new-label">New Label </Button>
+        <Button color="inherit" component={Link} to="/groups/new-group">New Group </Button>
+        <Button color="inherit" component={Link} to="/groups">Groups </Button>
         <Button color="inherit" component={Link} to="/login" onClick={props.onUserLogout} >Logout </Button>
     </Grid>
   )
