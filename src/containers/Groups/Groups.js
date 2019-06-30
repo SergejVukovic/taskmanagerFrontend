@@ -16,8 +16,10 @@ const useStyles = makeStyles(theme => ({
         width: '100%',
         maxWidth: 360,
         backgroundColor: theme.background,
+    },
+    subRoot: {
         marginLeft : '25%',
-        marginTop: '2%'
+        marginTop: '2%',
     },
     inline: {
         display: 'inline',
@@ -47,8 +49,8 @@ const Groups = () => {
     },[]);
 
     const addUserToGroup = (groupId) => {
-        axios.post('/api/groups/adduser', {
-            groups_id : groupId
+        axios.put('/api/groups/adduser', {
+            GroupsId : groupId
         }).then( () => {
             const filteredGroups = groups.filter(group => group.id !== groupId);
             setGroups(filteredGroups);
@@ -58,8 +60,8 @@ const Groups = () => {
     };
 
     const removeUserFromGroup = (groupId) => {
-        axios.post('/api/groups/removeuser', {
-            "groups_id" : groupId,
+        axios.put('/api/groups/removeuser', {
+            GroupsId : groupId,
         }).then(()=>{
             const filtererJoinedGroups = joinedGroups.filter(group => group.id !== groupId);
             setJoinedGroups(filtererJoinedGroups);

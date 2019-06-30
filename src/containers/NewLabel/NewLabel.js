@@ -28,12 +28,12 @@ class NewLabel extends Component {
 
     handleNewLabel = () => {
 
-        axios.post('/api/label', {
-            label_title: this.state.title.value,
-            label_description: this.state.description.value
+        axios.post('/api/labels', {
+            LabelTitle: this.state.title.value,
+            LabelDescription: this.state.description.value
             })
-            .then(response => this.props.onTaskAdded(response.data.message))
-            .catch(error => this.props.onTaskAddedError(error.response.data.message));
+            .then(response => this.props.onTaskAdded("Label created"))
+            .catch(error => this.props.onTaskAddedError(error.response.data.title));
     }
 
     checkValidity = (value, rules) => {

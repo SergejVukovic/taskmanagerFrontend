@@ -28,12 +28,12 @@ class NewTask extends Component {
 
     handleNewTask = () => {
 
-        axios.post('/api/task', {
-            task_title: this.state.title.value,
-            task_description: this.state.description.value
+        axios.post('/api/tasks', {
+            TaskTitle: this.state.title.value,
+            TaskDescription: this.state.description.value
             })
-            .then(result => this.props.onTaskAdded(result.data.message))
-            .catch(error => this.props.onTaskAddedError(error.response.data.message));
+            .then(result => this.props.onTaskAdded("Task created"))
+            .catch(error => this.props.onTaskAddedError(error.response.data.title));
     }
 
     checkValidity = (value, rules) => {

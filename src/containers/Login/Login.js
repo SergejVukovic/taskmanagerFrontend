@@ -27,7 +27,7 @@ class Login extends Component {
 
     handleLogin = () => {
 
-        axios.post('/api/login', {
+        axios.post('/api/users/login', {
             email: this.state.email.value,
             password: this.state.password.value
         })
@@ -37,7 +37,7 @@ class Login extends Component {
                     this.props.history.push("/dashboard");
                 }
             })
-            .catch(error => this.props.onUserLoginError(error.response.data.error));
+            .catch(error => this.props.onUserLoginError(error.response.data.title));
     }
 
     checkValidity = (value, rules) => {

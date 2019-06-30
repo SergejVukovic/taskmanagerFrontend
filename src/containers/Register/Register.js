@@ -47,13 +47,18 @@ class Register extends Component {
 
     handleRegister = () => {
 
-        axios.post('/api/register',{
+        axios.post('/api/users/register',{
             name  : this.state.name.value,
             email : this.state.email.value,
             password : this.state.password.value,
             password_confirmation : this.state.password_confirmation.value
         })
-        .then(result => {
+        .then(() => {
+            return axios.post('/api/users/login', {
+               email : this.state.email.value,
+               password : this.state.password.value
+            });
+        }).then(result => {
             if(result.data.token){
                 this.props.onUserRegistration(result.data.token);
                 this.props.history.push("/dashboard");

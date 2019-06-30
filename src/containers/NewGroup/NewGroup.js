@@ -31,8 +31,8 @@ class NewGroup extends Component {
         axios.post('/api/groups', {
             name: this.state.name.value,
             description: this.state.description.value
-        }).then(response => this.props.onTaskAdded(response.data.message))
-          .catch(error => this.props.onTaskAddedError(error.response.data.message));
+        }).then(response => this.props.onTaskAdded("Group created"))
+          .catch(error => this.props.onTaskAddedError(error.response.data.title));
     }
 
     checkValidity = (value, rules) => {
@@ -57,7 +57,7 @@ class NewGroup extends Component {
             <Paper style={{ width: '50%', margin: 'auto', marginTop: '10%', alignContent: 'center', padding: '5%' }}>
                 <div className={styles.margin}>
                     <Grid container justify="center" style={{ marginBottom: '10%' }}>
-                        <Typography variant='h4'>Create new label <Create /> </Typography>
+                        <Typography variant='h4'>Create new Group <Create /> </Typography>
                     </Grid>
                     <Grid container alignContent='center' spacing={8} alignItems="flex-end">
                         <Grid item md={true} sm={true} xs={true}>

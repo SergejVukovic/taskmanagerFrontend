@@ -56,18 +56,21 @@ class TaskCard extends Component {
             tasklabels:[...this.state.tasklabels,label],
         });
         this.props.newLabelAdded();
-        axios.post('/api/task/addlabel',{
-            tasks_id:this.props.newLabel.taskid,
-            labels_id:this.props.newLabel.label.id
+        axios.put('/api/labels/attach',{
+            TasksId:this.props.newLabel.taskid,
+            LabelsId:this.props.newLabel.label.id
         })
-        .then(response => this.props.requestSuccess(response.data.message))
-        .catch(error => this.props.requestError(error.response.data.message));
+        .then(response => this.props.requestSuccess("Label added"))
+        .catch(error => this.props.requestError(error.response.data.title));
     }
 
     handleGroupShare = (group) => {
-        axios.put(`api/task/${this.props.taskid}/group/${group.id}`)
-            .then(response => this.props.requestSuccess(response.data.message))
-            .catch(error => this.props.requestError(error.response.data.message));
+        console.log(group);
+        axios.put(`api/tasks/addtogroup`, {
+            TasksId : this.props.taskid,
+            GroupsId : group.id
+        }).then(response => this.props.requestSuccess("Shared with "+group.name))
+            .catch(error => this.props.requestError(error.response.data.title));
     }
 
     handleLabelDelete = (taskid,labelid) => {
@@ -84,12 +87,12 @@ class TaskCard extends Component {
                     };
                   });
 
-                  axios.post('/api/task/removelabel',{
-                    tasks_id  : taskid,
-                    labels_id : labelid
+                  axios.put('/api/labels/detach',{
+                    TasksId  : taskid,
+                    LabelsId : labelid
                 })
-                .then(response => this.props.requestSuccess(response.data.message))
-                .catch(error => this.props.requestError(error.response.data.message));
+                .then(response => this.props.requestSuccess("Label removed"))
+                .catch(error => this.props.requestError(error.response.data.title));
             }
             return label;
         })
@@ -99,14 +102,13 @@ class TaskCard extends Component {
         
         let Labels = this.state.tasklabels.map((label,index) => (
         <Chip
-        label={label.label_title}
+        label={label.labelTitle}
         component="a"
         key = {index}
         color="secondary" onDelete={() => this.handleLabelDelete(this.props.taskid,label.id)} variant="outlined"
         style = {{margin:5}}
         />))
-        console.log(this.props);
-        
+
         return (
             <Card style={styles.card}>
             <CardContent>

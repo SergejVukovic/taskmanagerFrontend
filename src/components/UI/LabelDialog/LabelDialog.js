@@ -49,7 +49,7 @@ class LabelDialog extends Component {
                     <LabelIcon />
                   </Avatar>
                 </ListItemAvatar>
-                <ListItemText primary={label.label_title || label.name} />
+                <ListItemText primary={label.labelTitle || label.name} />
               </ListItem>
             )):
             (<ListItem button key={2}>
